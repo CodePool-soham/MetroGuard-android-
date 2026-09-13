@@ -11,6 +11,8 @@ class AuthRepository(
     private val sessionManager: SessionManager
 ) {
 
+    val userSession = sessionManager.userSession
+
     suspend fun login(email: String, password: String): Result<Unit> {
         return try {
             val response = apiService.login(LoginRequest(email, password))
@@ -31,6 +33,18 @@ class AuthRepository(
         } catch (e: Exception) {
             Result.failure(e)
         }
+    }
+
+    suspend fun demoLogin(): Result<Unit> {
+        val demoSession = UserSession(
+            token = "demo-token",
+            userId = "demo-id",
+            email = "demo@metroguard.ai",
+            name = "Demo Inspector",
+            role = "INSPECTOR"
+        )
+        sessionManager.saveSession(demoSession)
+        return Result.success(Unit)
     }
 
     suspend fun register(name: String, email: String, password: String): Result<Unit> {

@@ -20,6 +20,8 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
 
+    val userSession = repository.userSession
+
     fun login(email: String, password: String) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
@@ -34,6 +36,19 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     error = exception.message ?: "Unknown login error"
+                )
+            }
+        }
+    }
+
+    fun demoLogin() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+            val result = repository.demoLogin()
+            result.onSuccess {
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    isLoginSuccess = true
                 )
             }
         }
