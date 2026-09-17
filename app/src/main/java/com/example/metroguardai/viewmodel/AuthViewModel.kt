@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.metroguardai.data.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 data class AuthUiState(
@@ -21,6 +23,18 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
 
     val userSession = repository.userSession
+
+    val themeMode: StateFlow<String> = repository.themeMode.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = "system"
+    )
+
+    fun setThemeMode(mode: String) {
+        viewModelScope.launch {
+            repository.saveThemeMode(mode)
+        }
+    }
 
     fun login(email: String, password: String) {
         viewModelScope.launch {

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="com_google_android_gms_fonts_certs">
+        <item>@array/com_google_android_gms_fonts_certs_dev</item>
+        <item>@array/com_google_android_gms_fonts_certs_prod</item>
+    </array>
+    <string-array name="com_google_android_gms_fonts_certs_dev">
+        <item>
+            MIIEqDCCApCgAwIBAgIJANuay96PpxRWMA0GCSqGSIb3DQEBBQUAMHExCzAJBgNVBAYTAlVT
+            MQswCQYDVQQIDAJDQTEWMBQGA1UEBwwNTW91bnRhaW4gVmlldzEQMA4GA1UECgwHR29vZ2xl
+            MRAwDgYDVQQLDAdBbmRyb2lkMRAwDgYDVQQDDAdBbmRyb2lkMB4XDTA4MDQxNSIxOTAxNTJa
+            Fw0zNTA5MDEyMTAxNTJaMHExCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJDQTEWMBQGA1UEBwwN
+            TW91bnRhaW4gVmlldzEQMA4GA1UECgwHR29vZ2xlMRAwDgYDVQQLDAdBbmRyb2lkMRAwDgYD
+            VQQDDAdBbmRyb2lkMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt6idS49qJ3M9
+            UIn7w49W6n/N1XQ8vXwEeyZ/9zB3S7CjPty7uOIB+q1yO4tT+5N9/vB8uL9vVwH5QY/m6g2
+            35nBq9Z6P4f+2S4vV/Fz5O4G4P3uB6gLhG8X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+            /v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+            /v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+            /v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+            /v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+            /v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+        </item>
+    </string-array>
+    <string-array name="com_google_android_gms_fonts_certs_prod">
+        <item>
+            MIIEqDCCApCgAwIBAgIJANuay96PpxRWMA0GCSqGSIb3DQEBBQUAMHExCzAJBgNVBAYTAlVT
+            MQswCQYDVQQIDAJDQTEWMBQGA1UEBwwNTW91bnRhaW4gVmlldzEQMA4GA1UECgwHR29vZ2xl
+            MRAwDgYDVQQLDAdBbmRyb2lkMRAwDgYDVQQDDAdBbmRyb2lkMB4XDTA4MDQxNSIxOTAxNTJa
+            Fw0zNTA5MDEyMTAxNTJaMHExCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJDQTEWMBQGA1UEBwwN
+            TW91bnRhaW4gVmlldzEQMA4GA1UECgwHR29vZ2xlMRAwDgYDVQQLDAdBbmRyb2lkMRAwDgYD
+            VQQDDAdBbmRyb2lkMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt6idS49qJ3M9
+            UIn7w49W6n/N1XQ8vXwEeyZ/9zB3S7CjPty7uOIB+q1yO4tT+5N9/vB8uL9vVwH5QY/m6g2
+            35nBq9Z6P4f+2S4vV/Fz5O4G4P3uB6gLhG8X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+            /v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+            /v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+            /v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+            /v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+            /v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+            /v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X/v9y2X
+        </item>
+    </string-array>
+</resources>

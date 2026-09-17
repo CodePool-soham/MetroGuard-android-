@@ -1,5 +1,7 @@
 package com.example.metroguardai.ui.navigation
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
@@ -19,6 +21,9 @@ import com.example.metroguardai.ui.screens.history.HistoryScreen
 import com.example.metroguardai.ui.screens.reports.ReportsScreen
 import com.example.metroguardai.ui.screens.scan.ScanScreen
 import com.example.metroguardai.viewmodel.AuthViewModel
+
+import com.example.metroguardai.data.repository.ComplianceRepository
+import com.example.metroguardai.viewmodel.ScanViewModel
 
 @Composable
 fun AppNavigation() {
@@ -42,7 +47,29 @@ fun AppNavigation() {
         navController = navController,
         startDestination = "login"
     ) {
-        composable("login") {
+        composable(
+            route = "login",
+            enterTransition = {
+                fadeIn(animationSpec = tween(300)) + slideInHorizontally(
+                    animationSpec = tween(300)
+                ) { -it / 2 }
+            },
+            exitTransition = {
+                fadeOut(animationSpec = tween(300)) + slideOutHorizontally(
+                    animationSpec = tween(300)
+                ) { -it / 2 }
+            },
+            popEnterTransition = {
+                fadeIn(animationSpec = tween(300)) + slideInHorizontally(
+                    animationSpec = tween(300)
+                ) { -it / 2 }
+            },
+            popExitTransition = {
+                fadeOut(animationSpec = tween(300)) + slideOutHorizontally(
+                    animationSpec = tween(300)
+                ) { -it / 2 }
+            }
+        ) {
             LoginScreen(
                 viewModel = authViewModel,
                 onRegisterClick = { navController.navigate("register") },
@@ -54,7 +81,29 @@ fun AppNavigation() {
             )
         }
         
-        composable("register") {
+        composable(
+            route = "register",
+            enterTransition = {
+                fadeIn(animationSpec = tween(300)) + slideInHorizontally(
+                    animationSpec = tween(300)
+                ) { it / 2 }
+            },
+            exitTransition = {
+                fadeOut(animationSpec = tween(300)) + slideOutHorizontally(
+                    animationSpec = tween(300)
+                ) { it / 2 }
+            },
+            popEnterTransition = {
+                fadeIn(animationSpec = tween(300)) + slideInHorizontally(
+                    animationSpec = tween(300)
+                ) { it / 2 }
+            },
+            popExitTransition = {
+                fadeOut(animationSpec = tween(300)) + slideOutHorizontally(
+                    animationSpec = tween(300)
+                ) { it / 2 }
+            }
+        ) {
             RegisterScreen(
                 viewModel = authViewModel,
                 onLoginClick = { navController.navigate("login") },
@@ -82,7 +131,17 @@ fun AppNavigation() {
         }
 
         composable("scan") {
-            ScanScreen(onBack = { navController.popBackStack() })
+            val scanViewModel: ScanViewModel = viewModel(
+                factory = object : ViewModelProvider.Factory {
+                    @Suppress("UNCHECKED_CAST")
+                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                        val apiService = RetrofitClient.getApiService(context)
+                        val repository = ComplianceRepository(apiService)
+                        return ScanViewModel(repository) as T
+                    }
+                }
+            )
+            ScanScreen(viewModel = scanViewModel, onBack = { navController.popBackStack() })
         }
 
         composable("history") {

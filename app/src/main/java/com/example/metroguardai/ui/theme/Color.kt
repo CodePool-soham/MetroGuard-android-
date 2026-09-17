@@ -2,10 +2,22 @@ package com.example.metroguardai.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Metrology Professional Palette
+val NavyBlue = Color(0xFF0D47A1)
+val LightNavy = Color(0xFF5472D3)
+val DarkNavy = Color(0xFF002171)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val SteelBlue = Color(0xFF455A64)
+val LightSteel = Color(0xFF718792)
+val DarkSteel = Color(0xFF1C313A)
+
+val ComplianceGreen = Color(0xFF2E7D32)
+val ViolationRed = Color(0xFFC62828)
+
+// Light Theme Surface/Background
+val BackgroundLight = Color(0xFFF8F9FA)
+val SurfaceLight = Color(0xFFFFFFFF)
+
+// Dark Theme Surface/Background
+val BackgroundDark = Color(0xFF121212)
+val SurfaceDark = Color(0xFF1E1E1E)

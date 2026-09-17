@@ -12,6 +12,11 @@ class AuthRepository(
 ) {
 
     val userSession = sessionManager.userSession
+    val themeMode = sessionManager.themeMode
+
+    suspend fun saveThemeMode(mode: String) {
+        sessionManager.saveThemeMode(mode)
+    }
 
     suspend fun login(email: String, password: String): Result<Unit> {
         return try {

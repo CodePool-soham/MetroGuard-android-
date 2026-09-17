@@ -23,6 +23,7 @@ class SessionManager(private val context: Context) {
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val NAME_KEY = stringPreferencesKey("name")
         private val ROLE_KEY = stringPreferencesKey("role")
+        private val THEME_MODE_KEY = stringPreferencesKey("theme_mode")
     }
 
     val userSession: Flow<UserSession> = context.dataStore.data
@@ -42,6 +43,20 @@ class SessionManager(private val context: Context) {
                 role = preferences[ROLE_KEY]
             )
         }
+
+    val themeMode: Flow<String> = context.dataStore.data
+        .catch { exception ->
+            if (exception is IOException) emit(emptyPreferences()) else throw exception
+        }
+        .map { preferences ->
+            preferences[THEME_MODE_KEY] ?: "system"
+        }
+
+    suspend fun saveThemeMode(mode: String) {
+        context.dataStore.edit { preferences ->
+            preferences[THEME_MODE_KEY] = mode
+        }
+    }
 
     suspend fun saveSession(session: UserSession) {
         context.dataStore.edit { preferences ->
