@@ -3,6 +3,7 @@ package com.example.metroguardai.ui.screens.scan
 import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -398,7 +399,19 @@ fun ImageAnalysisForm(
 
 @Composable
 fun ComplianceResultView(response: ComplianceResponse) {
-    val color = if (response.isCompliant) Color(0xFF2E7D32) else Color(0xFFC62828)
+    val isCompliant = response.status == "COMPLIANT"
+    val color = when (response.status) {
+        "COMPLIANT" -> Color(0xFF2E7D32)
+        "REVIEW_REQUIRED" -> Color(0xFFF57C00)
+        else -> Color(0xFFC62828)
+    }
+    
+    val statusIcon = when (response.status) {
+        "COMPLIANT" -> Icons.Default.CheckCircle
+        "REVIEW_REQUIRED" -> Icons.Default.Info
+        else -> Icons.Default.Warning
+    }
+
     Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp)) {
         Surface(
             color = color.copy(alpha = 0.1f),
@@ -407,29 +420,68 @@ fun ComplianceResultView(response: ComplianceResponse) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                Icon(if (response.isCompliant) Icons.Default.CheckCircle else Icons.Default.Warning, contentDescription = null, tint = color, modifier = Modifier.size(32.dp))
+                Icon(statusIcon, contentDescription = null, tint = color, modifier = Modifier.size(32.dp))
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
-                    Text(if (response.isCompliant) "COMPLIANT" else "NON-COMPLIANT", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = color)
-                    Text(response.overallRemarks ?: "Analysis complete", style = MaterialTheme.typography.bodySmall)
+                    Text(
+                        text = response.status.replace("_", " "),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = color
+                    )
+                    Text("Compliance Score: ${response.score}%", style = MaterialTheme.typography.bodySmall)
                 }
             }
         }
         
         Spacer(modifier = Modifier.height(24.dp))
-        Text("Found Declarations", fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.height(8.dp))
-
-        response.declarations?.forEach { 
-            ListItem(
-                headlineContent = { Text(it.fieldName ?: "Unknown", fontWeight = FontWeight.SemiBold) },
-                supportingContent = { Text(it.foundText ?: "Not detected") },
-                trailingContent = { Icon(if (it.isPresent == true) Icons.Default.Check else Icons.Default.Close, contentDescription = null, tint = if (it.isPresent == true) Color(0xFF2E7D32) else Color(0xFFC62828)) }
-            )
-            HorizontalDivider(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
-            )
+        
+        if (response.foundDeclarations.isNotEmpty()) {
+            Text("Found Declarations", fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(8.dp))
+            response.foundDeclarations.forEach { declaration ->
+                ListItem(
+                    headlineContent = { Text(declaration, fontWeight = FontWeight.SemiBold) },
+                    trailingContent = { Icon(Icons.Default.Check, contentDescription = null, tint = Color(0xFF2E7D32)) }
+                )
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+            }
+            Spacer(modifier = Modifier.height(16.dp))
         }
+
+        if (response.missingDeclarations.isNotEmpty()) {
+            Text("Missing Declarations", fontWeight = FontWeight.Bold, color = Color(0xFFC62828))
+            Spacer(modifier = Modifier.height(8.dp))
+            response.missingDeclarations.forEach { declaration ->
+                ListItem(
+                    headlineContent = { Text(declaration, fontWeight = FontWeight.SemiBold) },
+                    trailingContent = { Icon(Icons.Default.Close, contentDescription = null, tint = Color(0xFFC62828)) }
+                )
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        if (response.violations.isNotEmpty()) {
+            Text("Detected Violations", fontWeight = FontWeight.Bold, color = Color(0xFFC62828))
+            Spacer(modifier = Modifier.height(8.dp))
+            response.violations.forEach { violation ->
+                ListItem(
+                    headlineContent = { Text(violation, style = MaterialTheme.typography.bodyMedium) },
+                    leadingContent = { Icon(Icons.Default.ErrorOutline, contentDescription = null, tint = Color(0xFFC62828), modifier = Modifier.size(20.dp)) }
+                )
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "Scan ID: ${response.scanId}",
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.End
+        )
     }
 }

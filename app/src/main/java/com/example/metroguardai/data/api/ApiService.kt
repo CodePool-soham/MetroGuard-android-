@@ -20,9 +20,9 @@ interface ApiService {
     suspend fun register(@Body request: RegisterRequest): Response<Unit>
 
     @Multipart
-    @POST("api/compliance/analyze-image")
+    @POST("api/compliance/analyze-images")
     suspend fun analyzeImage(
-        @Part file: MultipartBody.Part,
+        @Part files: List<MultipartBody.Part>,
         @Part("manual_pack_width_cm") manualWidth: RequestBody?,
         @Part("manual_pack_height_cm") manualHeight: RequestBody?,
         @Part("is_molded") isMolded: RequestBody?

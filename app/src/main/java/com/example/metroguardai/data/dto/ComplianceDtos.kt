@@ -6,15 +6,12 @@ package com.example.metroguardai.data.dto
  * [TODO]: Synchronize with backend team and update accordingly.
  */
 data class ComplianceResponse(
-    val id: String?,
-    val timestamp: String?,
-    val productName: String?,
-    val isCompliant: Boolean,
-    val packageType: String?,
-    val verifiedDimensions: PackDimensions?,
-    val declarations: List<DeclarationCheck>?,
-    val violations: List<Violation>?,
-    val overallRemarks: String?
+    val status: String,
+    val score: Int,
+    val foundDeclarations: List<String>,
+    val missingDeclarations: List<String>,
+    val violations: List<String>,
+    val scanId: String
 )
 
 data class PackDimensions(

@@ -1,5 +1,6 @@
 package com.example.metroguardai.data.repository
 
+import android.util.Log
 import com.example.metroguardai.data.api.ApiService
 import com.example.metroguardai.data.dto.ComplianceResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -18,14 +19,14 @@ class ComplianceRepository(private val apiService: ApiService) {
     ): Result<ComplianceResponse> {
         return try {
             val fileRequestBody = imageBytes.toRequestBody("image/jpeg".toMediaTypeOrNull())
-            val filePart = MultipartBody.Part.createFormData("file", fileName, fileRequestBody)
+            val filePart = MultipartBody.Part.createFormData("files", fileName, fileRequestBody)
 
             val widthRequestBody = widthCm?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
             val heightRequestBody = heightCm?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
             val isMoldedRequestBody = isMolded.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
             val response = apiService.analyzeImage(
-                file = filePart,
+                files = listOf(filePart),
                 manualWidth = widthRequestBody,
                 manualHeight = heightRequestBody,
                 isMolded = isMoldedRequestBody

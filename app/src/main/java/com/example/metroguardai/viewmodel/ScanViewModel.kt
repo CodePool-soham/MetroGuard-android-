@@ -1,6 +1,7 @@
 package com.example.metroguardai.viewmodel
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.metroguardai.data.dto.ComplianceResponse
